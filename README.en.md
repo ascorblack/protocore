@@ -18,34 +18,31 @@ This is a library, not a full hosted platform: you embed it into your own API/se
 
 ## Motivation
 
-<details>
-<summary><strong>From myself</strong> — why this core exists and how the open version differs from the private one</summary>
+**From the author** — why this core exists and how the open version differs from the private one.
 
 ### Context
 
-I’ve spent several years integrating neural networks into business workflows. Most of the time the need is for a fixed pipeline where the model doesn’t take initiative — and that experience led to the question: *how to build a system that gives the model more autonomy while staying predictable and production-ready?*
+Experience integrating neural networks into business workflows shows that in most scenarios what is needed is a fixed pipeline where the model is not expected to take initiative. That leads to the question: *how do you build a system that gives the model more autonomy while staying predictable and production-ready?*
 
 ### How the library came about
 
-About a year ago I started using other agent libraries more actively for pet projects, but not all of my ideas could be implemented within them, so about a month ago I began designing and developing an agent core aimed at **small local models** (roughly up to 80B parameters, with a focus on MoE models like Qwen3-3.5 30B/35B A3B). I went through many existing implementations and built this library as a **consolidation of the solutions I found** — to systematize the approach and reuse it across my own projects and in production without reinventing the wheel each time.
+The answer to that question is the Protocore agent core: protocol-oriented orchestration with an immutable loop, strict contracts, and controlled model autonomy. When working with existing agent frameworks, some of these ideas could not be implemented within their constraints — so a core was designed that targets **local models of small to medium size** (roughly up to ~80B parameters, with a focus on MoE architectures like Qwen3-3.5 30B/35B A3B). The library draws on the analysis of many open-source implementations and serves as a **consolidation of proven solutions** — to systematize the approach and reuse it in your own and production projects without reinventing the wheel.
 
 ### About this repository
 
-What you see here is the **open, “base” version** of that core. I deliberately left out:
+This repository contains the **open, base version** of the core. Deliberately not included:
 
-| In the open repo | In the private repo |
-|------------------|---------------------|
+| In the open version | In the private repository |
+|---------------------|----------------------------|
 | Stable core, tests, contracts | Real-time metrics and dashboards |
 | No built-in API server | Custom API server and streams |
 | No ready-made state persistence | Ready-made state persistence layer |
 | No unified RunConfig / per-run policy overrides | Unified policy layer per run |
 | No specific measures against Prompt Injection and shell injection | Improved security: protection against Prompt Injection and shell injection |
 
-Everything in the right column and other ideas are developed in a **private repository** for commercial products and personal pet projects. The public version is meant to stay a core you can build your own services on — or extend with your own proprietary tooling on top.
+Everything in the right column and related ideas are developed in the **private repository** for commercial products and personal projects. The public version remains a stable core you can build your own services on or extend with proprietary tooling.
 
-**This repo is not abandoned:** despite working on the commercial version, I plan to update the open core periodically — bugfixes, compatibility with newer dependencies, and when possible backporting improvements that don’t depend on the private tooling.
-
-</details>
+The open core is maintained in parallel with the private branch: bugfixes, compatibility with new dependencies, and when possible backporting improvements that do not affect the proprietary tooling.
 
 ## Core features
 
@@ -65,7 +62,7 @@ Latest full local test run:
 - `778 passed`, `15 skipped`
 - `Total coverage: 93.86%` (required threshold is `>=90%`)
 
-See `docs/testing.md` for details.
+See [docs/testing.md](docs/testing.md) for details.
 
 ## Install
 
@@ -156,7 +153,7 @@ orchestrator = AgentOrchestrator(
 - Integration guide: [docs/guide.en.md](docs/guide.en.md)
 - Architecture: [docs/architecture.md](docs/architecture.md)
 - Event contract: [docs/events-contract.md](docs/events-contract.md)
-- Usage examples: [docs/examples.md](docs/examples.md) and `examples/`
+- Usage examples: [docs/examples.md](docs/examples.md) and [examples/](examples/)
 - Core must-have building blocks: [docs/core-must-haves.md](docs/core-must-haves.md)
 - Test evidence and coverage: [docs/testing.md](docs/testing.md)
 
@@ -167,7 +164,7 @@ uv sync --extra dev
 uv run pytest .
 ```
 
-API compatibility checks live in `tests/test_compatibility.py`. You can also run lint, type-check, and security audit manually: `ruff`, `mypy`, `bandit`, `pip-audit` (see `pyproject.toml`).
+API compatibility checks live in [tests/test_compatibility.py](tests/test_compatibility.py). You can also run lint, type-check, and security audit manually: `ruff`, `mypy`, `bandit`, `pip-audit` (see [pyproject.toml](pyproject.toml)).
 
 ## Public repository files
 

@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "protocore"
+version = "1.0.0"
+description = "Protocol-first core for small models — universal LLM agent orchestration"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+readme = "README.md"
+dependencies = [
+    "pydantic>=2.7",
+    "pluggy>=1.5",
+    "openai>=1.30",
+    "tiktoken>=0.12.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2",
+    "pytest-asyncio>=0.23",
+    "pytest-cov>=5.0",
+    "mypy>=1.10",
+    "ruff>=0.4",
+    "bandit>=1.7",
+    "pip-audit>=2.7",
+    "langgraph>=0.1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["protocore"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"protocore/py.typed" = "protocore/py.typed"
+
+[tool.mypy]
+strict = true
+python_version = "3.14"
+ignore_missing_imports = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "--cov=protocore --cov-fail-under=90 --cov-report=term-missing"
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
